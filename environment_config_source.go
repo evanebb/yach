@@ -52,17 +52,10 @@ func (e *EnvironmentConfigSource) Get(key string) (string, error) {
 }
 
 func (e *EnvironmentConfigSource) GetInt(key string) (int, error) {
-	// First, look up the key to see if a binding exists
-	keyBinding, exists := e.bindings[key]
-	if exists {
-		return strconv.Atoi(os.Getenv(keyBinding))
+	value, err := e.Get(key)
+	if err != nil {
+		return 0, err
 	}
 
-	// If a binding does not exist, check if auto binding is enabled
-	// If so, look up the raw key itself. If not, return an error.
-	if e.autoBind {
-		return strconv.Atoi(os.Getenv(keyBinding))
-	}
-
-	return 0, ErrNoBindingFound
+	return strconv.Atoi(value)
 }
