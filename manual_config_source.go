@@ -12,10 +12,12 @@ func NewManualConfigSource() *ManualConfigSource {
 	}
 }
 
+// Set will bind the provided string value to the specified key.
 func (m *ManualConfigSource) Set(key string, value string) {
 	m.stringBindings[key] = value
 }
 
+// SetInt will bind the provided integer value to the specified key.
 func (m *ManualConfigSource) SetInt(key string, value int) {
 	m.intBindings[key] = value
 }
